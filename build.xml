@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="automator" basedir="." default="help">
+    <description>
+    	Automatic install an application server of your choice and deploy your applications.
+    </description>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          automator properties
+         - - - - - - - - - - - - - - - - - -->
+	<property name="automator.dir.libs" value="lib" />
+	<property name="automator.dir.modules" value="modules" />
+	<property name="automator.dir.system" value="modules" />
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Classpath definitions
+         - - - - - - - - - - - - - - - - - -->
+	<path id="libs.classpath">
+		<pathelement location="${automator.dir.libs}/ant-contrib-1.0b3.jar" />
+	</path>
+
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Task definitions
+         - - - - - - - - - - - - - - - - - -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="libs.classpath" />
+	
+	<!-- ================================= 
+          target: help              
+         ================================= -->
+	<target name="help" description="Prints this overview">
+		<java classname="org.apache.tools.ant.Main" fork="yes" failonerror="true">
+			<classpath>
+				<fileset dir="${ant.home}/lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="-projecthelp"/>
+		</java>
+	</target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: load-modules                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="load-modules">
+    	<for param="module">
+    		<path>
+    			<dirset dir="${automator.dir.modules}" includes="*" />
+    		</path>
+    		<sequential>
+				<echo>Loading module: @{module}...</echo>
+				<ant antfile="@{module}/build.xml" target="help" />
+    		</sequential> 
+    	</for>
+    </target>
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: load-configuration                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="load-configuration">
+		<property environment="env" />
+
+		<exec executable="uname" os="Linux" failifexecutionfails="false" outputproperty="env.HOSTNAME">
+			<arg value="-n" />
+		</exec>
+
+		<condition property="hostname" value="${env.HOSTNAME}">
+			<os family="unix" />
+		</condition>
+		<condition property="hostname" value="${env.COMPUTERNAME}">
+			<os family="windows" />
+		</condition>
+
+		<echo>Reading properties from ${module.conf}/${hostname}.properties</echo>
+		<property file="${module.conf}/${hostname}.properties" />
+		
+		<property file="${module.conf}/default.properties" />
+	</target>
+</project>

@@ -1,0 +1,1 @@
+All modules for the project e.g. plugins sdk, maven project structure

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-common">
+	<property environment="env" />
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          Static properties
+         - - - - - - - - - - - - - - - - - -->
+	<property name="automator.dir.libs" value="lib" />
+	<property name="automator.dir.modules" value="modules" />
+	<property name="automator.dir.env" value="${automator.dir.}/environments" />
+	<property name="automator.dir.project" value="${automator.dir.}/project" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Read Hostname
+         - - - - - - - - - - - - - - - - - -->
+	<exec executable="uname" os="Linux" failifexecutionfails="false" outputproperty="env.HOSTNAME">
+		<arg value="-n" />
+	</exec>
+
+	<condition property="hostname" value="${env.HOSTNAME}">
+		<os family="unix" />
+	</condition>
+	<condition property="hostname" value="${env.COMPUTERNAME}">
+		<os family="windows" />
+	</condition>
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Environment properties
+         - - - - - - - - - - - - - - - - - -->	
+	<property file="${automator.dir}/${automator.dir.env}/env.${user.name}.properties" />
+	<property file="${automator.dir}/${automator.dir.env}/env.${hostname}.properties" />
+	<property file="${automator.dir}/${automator.dir.env}/env.properties" />
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          Project properties
+         - - - - - - - - - - - - - - - - - -->	
+	<property file="${automator.dir}/${automator.dir.project}/project.${user.name}.properties" />
+	<property file="${automator.dir}/${automator.dir.project}/project.${hostname}.properties" />
+	<property file="${automator.dir}/${automator.dir.project}/project.properties" />
+	
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          Define filter
+         - - - - - - - - - - - - - - - - - -->	
+	<filterset id="filter.env" onmissingfiltersfile="ignore">
+		<filtersfile file="${automator.dir}/${automator.dir.env}/env.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.env}/env.${hostname}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.env}/env.${user.name}.properties" />
+	</filterset>
+
+	<filterset id="filter.project" onmissingfiltersfile="ignore">
+		<filtersfile file="${automator.dir}/${automator.dir.project}/project.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.project}/project.${hostname}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.project}/project.${user.name}.properties" />
+	</filterset>
+	
+	<filterset id="filter.all">
+		<filterset refid="filter.env" />
+		<filterset refid="filter.project" />
+	</filterset>
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Classpath definitions
+         - - - - - - - - - - - - - - - - - -->
+	<path id="libs.classpath">
+		<pathelement location="${automator.dir.libs}/ant-contrib-1.0b3.jar" />
+	</path>
+
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Task definitions
+         - - - - - - - - - - - - - - - - - -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="libs.classpath" />
+	
+	
+	<!-- ================================= 
+          target: help              
+         ================================= -->
+	<target name="help" description="Prints this overview">
+		<java classname="org.apache.tools.ant.Main" fork="yes" failonerror="true">
+			<classpath>
+				<fileset dir="${ant.home}/lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="-projecthelp"/>
+		</java>
+	</target>	
+
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="automator.module.tomcat">
+	
+	<!-- ================================= 
+          target: help              
+         ================================= -->
+    <target name="help" description="description">
+        <echo>TomCat Module</echo>
+    </target>
+	
+</project>

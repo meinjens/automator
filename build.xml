@@ -10,19 +10,4 @@
 	<import file="includes/build-common.xml" />
 
 	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: load-modules                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="load-modules">
-    	<for param="module">
-    		<path>
-    			<dirset dir="${automator.dir.modules}" includes="*" />
-    		</path>
-    		<sequential>
-				<echo>Loading module: @{module}...</echo>
-				<ant antfile="@{module}/build.xml" target="help" />
-    		</sequential> 
-    	</for>
-    </target>
-	
 </project>

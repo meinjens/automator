@@ -12,6 +12,8 @@
 	<property name="automator.dir.environment" value="environments" />
 	<property name="automator.dir.system" value="system" />
 	
+	<property name="automator.filter.excludes" value="" />
+	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           Read Hostname
@@ -53,7 +55,7 @@
 		<filtersfile file="${automator.dir}/${automator.dir.environment}/env.${user.name}.properties" />
 	</filterset>
 
-	<filterset id="filter.project" onmissingfiltersfile="ignore">
+	<filterset id="filter.system" onmissingfiltersfile="ignore">
 		<filtersfile file="${automator.dir}/${automator.dir.system}/system.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.system}/system.${hostname}.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.system}/system.${user.name}.properties" />
@@ -61,9 +63,9 @@
 	
 	<filterset id="filter.all">
 		<filterset refid="filter.env" />
-		<filterset refid="filter.project" />
+		<filterset refid="filter.system" />
 	</filterset>
-	
+
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           Classpath definitions

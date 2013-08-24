@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="automator.module.liferay">
+	
 	<!-- ================================= 
-          target: help              
+          target: module-clean              
          ================================= -->
-    <target name="help" description="description">
-        <echo>Liferay Module</echo>
-    </target>
+    <target name="module-clean" description="Clean temporary files">
+        <delete dir="${tomcat.build}" includeemptydirs="true" />
+    </target>	
+	
+	
 
 </project>

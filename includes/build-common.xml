@@ -2,6 +2,7 @@
 <!DOCTYPE project>
 
 <project name="build-common">
+	
 	<property environment="env" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -9,8 +10,10 @@
          - - - - - - - - - - - - - - - - - -->
 	<property name="automator.dir.libs" value="lib" />
 	<property name="automator.dir.modules" value="modules" />
-	<property name="automator.dir.environment" value="environments" />
-	<property name="automator.dir.system" value="system" />
+	<property name="automator.dir.config" value="config" />
+	<property name="automator.dir.config.environment" value="${automator.dir.config}/environments" />
+	<property name="automator.dir.config.system" value="${automator.dir.config}/system" />
+	<property name="automator.dir.system-template" value="system-template" />
 	
 	<property name="automator.filter.excludes" value="" />
 	
@@ -33,32 +36,32 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           Environment properties
          - - - - - - - - - - - - - - - - - -->	
-	<property file="${automator.dir}/${automator.dir.environment}/env.${user.name}.properties" />
-	<property file="${automator.dir}/${automator.dir.environment}/env.${hostname}.properties" />
-	<property file="${automator.dir}/${automator.dir.environment}/env.properties" />
+	<property file="${automator.dir}/${automator.dir.config.environment}/env.${user.name}.properties" />
+	<property file="${automator.dir}/${automator.dir.config.environment}/env.${hostname}.properties" />
+	<property file="${automator.dir}/${automator.dir.config.environment}/env.properties" />
 
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           System properties
          - - - - - - - - - - - - - - - - - -->	
-	<property file="${automator.dir}/${automator.dir.system}/system.${user.name}.properties" />
-	<property file="${automator.dir}/${automator.dir.system}/system.${hostname}.properties" />
-	<property file="${automator.dir}/${automator.dir.system}/system.properties" />
+	<property file="${automator.dir}/${automator.dir.config.system}/system.${user.name}.properties" />
+	<property file="${automator.dir}/${automator.dir.config.system}/system.${hostname}.properties" />
+	<property file="${automator.dir}/${automator.dir.config.system}/system.properties" />
 	
 
 	<!-- - - - - - - - - - - - - - - - - - 
           Define filter
          - - - - - - - - - - - - - - - - - -->	
 	<filterset id="filter.env" onmissingfiltersfile="ignore">
-		<filtersfile file="${automator.dir}/${automator.dir.environment}/env.properties" />
-		<filtersfile file="${automator.dir}/${automator.dir.environment}/env.${hostname}.properties" />
-		<filtersfile file="${automator.dir}/${automator.dir.environment}/env.${user.name}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.${hostname}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.${user.name}.properties" />
 	</filterset>
 
 	<filterset id="filter.system" onmissingfiltersfile="ignore">
-		<filtersfile file="${automator.dir}/${automator.dir.system}/system.properties" />
-		<filtersfile file="${automator.dir}/${automator.dir.system}/system.${hostname}.properties" />
-		<filtersfile file="${automator.dir}/${automator.dir.system}/system.${user.name}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.${hostname}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.${user.name}.properties" />
 	</filterset>
 	
 	<filterset id="filter.all">

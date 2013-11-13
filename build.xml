@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
 
 <project name="automator" basedir="." default="help">
     <description>
@@ -8,57 +9,8 @@
 	<property name="automator.dir" value="." />
 	
 	<import file="includes/build-common.xml" />
-
-	<!-- ================================= 
-          target: clean              
-         ================================= -->
-    <target name="clean" description="Clean all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-clean" />
-		</antcall>
-    </target>
-
-	
-	<!-- ================================= 
-          target: prepare              
-         ================================= -->
-    <target name="prepare" description="Initialize all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-prepare" />
-		</antcall>
-    </target>
-
-	
-	<!-- ================================= 
-          target: download-package
-         ================================= -->
-    <target name="download-package" description="Download package for all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-download-package" />
-		</antcall>
-    </target>
-	
-	
-	<!-- ================================= 
-          target: install
-         ================================= -->
-    <target name="install" description="Initialize all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-install" />
-		</antcall>
-    </target>
-	
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: loop-modules                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="loop-modules">
-    	<for param="module" list="${system.modules}">
-    		<sequential>
-				<echo level="debug">Executing module @{module} with target ${loop.modules.cmd}.</echo>
-				<ant antfile="${automator.dir}/modules/@{module}/build.xml" target="${loop.modules.cmd}" inheritrefs="true" />
-    		</sequential> 
-    	</for>
-    </target>
+	<import file="includes/build-modules.xml" />
+	<import file="includes/build-system.xml" />
+	<import file="includes/build-tests.xml" />
 	
 </project>

@@ -13,9 +13,7 @@
 	<property name="automator.dir.config" value="config" />
 	<property name="automator.dir.config.environment" value="${automator.dir.config}/environments" />
 	<property name="automator.dir.config.system" value="${automator.dir.config}/system" />
-	<property name="automator.dir.system-template" value="system-template" />
-	
-	<property name="automator.filter.excludes" value="" />
+	<property name="automator.dir.template.system" value="system" />
 	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -31,7 +29,7 @@
 	<condition property="hostname" value="${env.COMPUTERNAME}">
 		<os family="windows" />
 	</condition>
-	
+
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           Environment properties

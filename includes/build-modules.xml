@@ -2,12 +2,19 @@
 <!DOCTYPE project>
 
 <project name="build-modules">
-
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Static properties
+         - - - - - - - - - - - - - - - - - -->
+	<property name="automator.module.build.dir" value="build" />
+	<property name="automator.module.download.dir" value="download" />
+	<property name="automator.module.diff.dir" value="_diff" />
+	
 	<!-- ================================= 
           target: clean              
          ================================= -->
     <target name="clean" description="Clean all modules">
-		<antcall target="loop-modules">
+		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-clean" />
 		</antcall>
     </target>
@@ -17,38 +24,28 @@
           target: prepare              
          ================================= -->
     <target name="prepare" description="Initialize all modules">
-		<antcall target="loop-modules">
+		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-prepare" />
 		</antcall>
     </target>
-
+	
 	
 	<!-- ================================= 
-          target: create-config              
+          target: download-prerequisites
          ================================= -->
-    <target name="create-config" description="Create configs for all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-create-config" />
+    <target name="download-prerequisites" description="Download prerequisites for all modules">
+		<antcall target="loop-modules" inheritrefs="true">
+			<param name="loop.modules.cmd" value="module-download-prerequisites" />
 		</antcall>
     </target>
 	
 	
 	<!-- ================================= 
-          target: download-package
+          target: build step
          ================================= -->
-    <target name="download-package" description="Download package for all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-download-package" />
-		</antcall>
-    </target>
-	
-	
-	<!-- ================================= 
-          target: install
-         ================================= -->
-    <target name="install" description="Initialize all modules">
-		<antcall target="loop-modules">
-			<param name="loop.modules.cmd" value="module-install" />
+    <target name="build" description="Build all modules">
+		<antcall target="loop-modules" inheritrefs="true">
+			<param name="loop.modules.cmd" value="module-build" />
 		</antcall>
     </target>
 	
@@ -56,8 +53,8 @@
 	<!-- ================================= 
           target: show-module-properties
          ================================= -->
-    <target name="show-module-properties" description="Display propertier of all modules">
-		<antcall target="loop-modules">
+    <target name="show-module-properties" description="Display properties of all modules">
+		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-show-properties" />
 		</antcall>
     </target>
@@ -70,7 +67,7 @@
     	<for param="module" list="${system.modules}">
     		<sequential>
 				<echo>Executing module @{module} with target ${loop.modules.cmd}.</echo>
-				<ant antfile="${automator.dir}/modules/@{module}/module.xml" target="${loop.modules.cmd}" inheritrefs="true" />
+				<ant antfile="${automator.dir}/modules/@{module}/build-module.xml" target="${loop.modules.cmd}" inheritrefs="true" />
     		</sequential> 
     	</for>
     </target>

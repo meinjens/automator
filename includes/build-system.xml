@@ -3,4 +3,18 @@
 
 <project name="build-system">
 
+	<!-- ================================= 
+          target: deinstall
+         ================================= -->
+	<target name="deinstall" description="Deinstall the whole system">
+		
+	</target>
+
+	<!-- ================================= 
+          target: install
+         ================================= -->
+	<target name="install" description="Install the whole system">
+	
+	</target>
+
 </project>

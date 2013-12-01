@@ -3,4 +3,11 @@
 
 <project name="build-tests">
 
+	<!-- ================================= 
+          target: print-versions              
+         ================================= -->
+    <target name="print-versions" description="Print versions">
+    	<echo>ANT-Version: ${ant.version}</echo>
+    </target>
+
 </project>

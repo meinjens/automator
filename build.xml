@@ -3,10 +3,11 @@
 
 <project name="automator" basedir="." default="help">
     <description>
-    	Automatic install an application server of your choice and deploy your applications.
+    	Automator Version 0.1
     </description>
 	
 	<property name="automator.dir" value="." />
+
 	
 	<import file="includes/build-common.xml" />
 	<import file="includes/build-modules.xml" />

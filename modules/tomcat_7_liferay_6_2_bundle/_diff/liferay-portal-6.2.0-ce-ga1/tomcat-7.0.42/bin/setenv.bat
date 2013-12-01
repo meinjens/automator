@@ -13,7 +13,7 @@ rem   JRE_HOME        Must point at your Java Runtime installation.
 rem                   Defaults to JAVA_HOME if empty. If JRE_HOME and JAVA_HOME
 rem                   are both set, JRE_HOME is used.
 
-SET JRE_HOME="@system.jre.home"
+SET JRE_HOME="@system.jre.home@"
 
 
 rem   JAVA_OPTS       (Optional) Java runtime options used when any command
@@ -23,7 +23,7 @@ rem                   should be used by Tomcat and also by the stop process,
 rem                   the version command etc.
 rem                   Most options should go into CATALINA_OPTS.
 
-SET JAVA_OPTS="%JAVA_OPTS% -Dfile.encoding=@system.file.encoding@"
+SET JAVA_OPTS="%JAVA_OPTS% @module.tomcat_7_liferay_6_2_bundle.java.additional_props@" 
 
 
 rem   CATALINA_OPTS   (Optional) Java runtime options used when the "start",
@@ -33,4 +33,4 @@ rem                   only be used by Tomcat itself, not by the stop process,
 rem                   the version command etc.
 rem                   Examples are heap size, GC logging, JMX ports etc.
 
-SET CATALINA_OPTS="%CATALINA_OPTS% -Xms@tomcat.java.mem.minsize@ -Xmx@tomcat.java.mem.maxsize@ -XX:MaxPermSize=@tomcat.java.mem.permsize@ @tomcat.catalina.additional_props@"
+SET CATALINA_OPTS="%CATALINA_OPTS% @system.catalina.opts@ -Dfile.encoding=@system.file.encoding@ -Duser.timezone=@system.timezone@ -Xms@system.java.mem.minsize@ -Xmx@system.java.mem.maxsize@ -XX:MaxPermSize=@system.java.mem.permsize@ @module.tomcat_7_liferay_6_2_bundle.catalina.additional_props@"

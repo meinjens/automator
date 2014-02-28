@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="automator.module.sample">
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: static properties                      
+         - - - - - - - - - - - - - - - - - -->
+	<property name="module.sample.dir" value="${automator.dir}/modules/sample" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: module-init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="module-init">
+    	<property file="${module.sample.dir}/module.properties" />
+
+    	<property name="module.sample.build.dir" value="${module.sample.dir}/${automator.module.build.dir}" />
+    	
+    	<mkdir dir="${module.sample.build.dir}" />
+    </target>
+
+	
+	<!-- ================================= 
+          target: module-clean              
+         ================================= -->
+    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    	<echo>Insert c steps for module here</echo>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-build              
+         ================================= -->
+    <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Insert build steps for module here</echo>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="description">
+    	<echoproperties prefix="module.sample"></echoproperties>
+    </target>
+
+	
+</project>

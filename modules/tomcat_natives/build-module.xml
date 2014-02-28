@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="automator.module.tomcat_natives">
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: static properties                      
+         - - - - - - - - - - - - - - - - - -->
+	<property name="module.tomcat_natives.dir" value="${automator.dir}/modules/tomcat_natives" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: module-init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="module-init">
+    	<property file="${module.tomcat_natives.dir}/module.properties" />
+
+    	<property name="module.tomcat_natives.build.dir" value="${module.tomcat_natives.dir}/${automator.module.build.dir}" />
+    	<property name="module.tomcat_natives.download.dir" value="${module.tomcat_natives.dir}/${automator.module.download.dir}" />
+    </target>
+
+	
+	<!-- ================================= 
+          target: module-clean              
+         ================================= -->
+    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    	<delete dir="${module.tomcat_natives.build.dir}" includeemptydirs="true" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-build              
+         ================================= -->
+    <target name="module-build" depends="module-init" description="Build module">
+    	<mkdir dir="${module.tomcat_natives.build.dir}" />
+    	
+    	<antcall target="download-prerequisites" inheritrefs="true" />
+    	<antcall target="unzip-package" inheritrefs="true" />
+    	<antcall target="install-lib" inheritrefs="true" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="description">
+    	<echoproperties prefix="module.tomcat_natives"></echoproperties>
+    </target>
+
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: download-prerequisites                     
+         - - - - - - - - - - - - - - - - - -->
+    <target name="download-prerequisites" depends="module-init" description="Download prerequisites from the internet">
+    	<delete dir="${module.tomcat_natives.download.dir}" includeemptydirs="true" />
+    	<mkdir dir="${module.tomcat_natives.download.dir}" />
+    	
+    	<get dest="${module.tomcat_natives.download.dir}" src="${module.tomcat_natives.download.url}" />
+    </target>	
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: unzip-package                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unzip-package">
+    	<unzip dest="${module.tomcat_natives.build.dir}">
+    		<fileset dir="${module.tomcat_natives.download.dir}" includes="*.zip" />
+    	</unzip>
+    </target>	
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: install-lib                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="install-lib">
+    	<propertycopy from="module.tomcat_natives.${system.arch}.dir" name="module.tomcat_natives.lib" />
+    	
+    	<echo>Copying TomCat natives lib...</echo>
+		<copy todir="${system.java.home}/bin" overwrite="true" includeemptydirs="false">
+			<fileset file="${module.tomcat_natives.build.dir}/${module.tomcat_natives.lib}" />
+		</copy>
+    </target>	
+	
+</project>

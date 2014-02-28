@@ -34,6 +34,7 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           Environment properties
          - - - - - - - - - - - - - - - - - -->	
+	<property file="${automator.dir}/${automator.dir.config.environment}/env.${system}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.environment}/env.${user.name}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.environment}/env.${hostname}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.environment}/env.properties" />
@@ -41,7 +42,8 @@
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           System properties
-         - - - - - - - - - - - - - - - - - -->	
+         - - - - - - - - - - - - - - - - - -->
+	<property file="${automator.dir}/${automator.dir.config.system}/system.${system}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.system}/system.${user.name}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.system}/system.${hostname}.properties" />
 	<property file="${automator.dir}/${automator.dir.config.system}/system.properties" />
@@ -54,12 +56,14 @@
 		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.${hostname}.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.${user.name}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.environment}/env.${system}.properties" />
 	</filterset>
 
 	<filterset id="filter.system" onmissingfiltersfile="ignore">
 		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.${hostname}.properties" />
 		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.${user.name}.properties" />
+		<filtersfile file="${automator.dir}/${automator.dir.config.system}/system.${system}.properties" />
 	</filterset>
 	
 	<filterset id="filter.all">

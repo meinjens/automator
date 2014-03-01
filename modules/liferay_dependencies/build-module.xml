@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="automator.module.liferay_dependencies">
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: static properties                      
+         - - - - - - - - - - - - - - - - - -->
+	<property name="module.liferay_dependencies.dir" value="${automator.dir}/modules/liferay_dependencies" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: module-init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="module-init">
+    	<property file="${module.liferay_dependencies.dir}/module.properties" />
+
+    	<property name="module.liferay_dependencies.build.dir" value="${module.liferay_dependencies.dir}/${automator.module.build.dir}" />
+    	<property name="module.liferay_dependencies.download.dir" value="${module.liferay_dependencies.dir}/${automator.module.download.dir}" />
+    </target>
+
+	
+	<!-- ================================= 
+          target: module-clean              
+         ================================= -->
+    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    	<delete dir="${module.liferay_dependencies.build.dir}" includeemptydirs="true" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-build              
+         ================================= -->
+    <target name="module-build" depends="module-init" description="Build module">
+    	<mkdir dir="${module.liferay_dependencies.build.dir}" />
+    	
+    	<antcall target="download-prerequisites" inheritrefs="true" />
+    	<antcall target="unzip-package" inheritrefs="true" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="description">
+    	<echoproperties prefix="module.liferay_dependencies"></echoproperties>
+    </target>
+
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: download-prerequisites                     
+         - - - - - - - - - - - - - - - - - -->
+    <target name="download-prerequisites" depends="module-init" description="Download prerequisites from the internet">
+    	<delete dir="${module.liferay_dependencies.download.dir}" includeemptydirs="true" />
+    	<mkdir dir="${module.liferay_dependencies.download.dir}" />
+    	
+    	<get dest="${module.liferay_dependencies.download.dir}" src="${module.liferay_dependencies.download.url}" />
+    </target>	
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: unzip-package                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unzip-package">
+    	<unzip dest="${module.liferay_dependencies.build.dir}">
+    		<fileset dir="${module.liferay_dependencies.download.dir}" includes="*.zip" />
+    		<cutdirsmapper dirs="1"/>
+    	</unzip>
+    </target>
+	
+</project>

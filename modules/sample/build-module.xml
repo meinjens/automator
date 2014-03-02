@@ -17,7 +17,7 @@
 
     	<property name="module.sample.build.dir" value="${module.sample.dir}/${automator.module.build.dir}" />
     	
-    	<mkdir dir="${module.sample.build.dir}" />
+    	
     </target>
 
 	
@@ -25,7 +25,7 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
-    	<echo>Insert c steps for module here</echo>
+    	<echo>Insert clean steps for module here</echo>
     </target>
 	
 	
@@ -33,6 +33,8 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<mkdir dir="${module.sample.build.dir}" />
+    	
     	<echo>Insert build steps for module here</echo>
     </target>
 	
@@ -40,7 +42,7 @@
 	<!-- ================================= 
           target: module-show-properties              
          ================================= -->
-    <target name="module-show-properties" depends="module-init" description="description">
+    <target name="module-show-properties" depends="module-init" description="Print properties of the module">
     	<echoproperties prefix="module.sample"></echoproperties>
     </target>
 

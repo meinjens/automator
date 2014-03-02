@@ -16,8 +16,6 @@
     	<property file="${module.sample.dir}/module.properties" />
 
     	<property name="module.sample.build.dir" value="${module.sample.dir}/${automator.module.build.dir}" />
-    	
-    	
     </target>
 
 	
@@ -37,6 +35,14 @@
     	
     	<echo>Insert build steps for module here</echo>
     </target>
+	
+	
+	<!-- ================================= 
+          target: module-deploy              
+         ================================= -->
+    <target name="module-deploy" depends="module-init" description="Build module">
+    	<echo>Insert deploy steps for module here</echo>
+    </target>	
 	
 	
 	<!-- ================================= 

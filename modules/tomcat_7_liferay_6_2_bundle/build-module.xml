@@ -25,26 +25,8 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    	<echo>Cleaning build dir...</echo>
     	<delete dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" includeemptydirs="true" />
-    </target>
-	
-	
-	<!-- ================================= 
-          target: module-download-prerequisites              
-         ================================= -->
-    <target name="module-download-prerequisites" depends="module-init" description="Download prerequisites from the internet">
-    	<delete dir="${module.tomcat_7_liferay_6_2_bundle.download.dir}" includeemptydirs="true" />
-    	<mkdir dir="${module.tomcat_7_liferay_6_2_bundle.download.dir}" />
-    	
-    	<get dest="${module.tomcat_7_liferay_6_2_bundle.download.dir}" src="${module.tomcat_7_liferay_6_2_bundle.download.url}" />
-    </target>
-
-	
-	<!-- ================================= 
-          target: module-prepare              
-         ================================= -->
-    <target name="module-prepare" depends="module-init" description="Prepare module for build">
-    	<mkdir dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" />
     </target>
 	
 	
@@ -52,25 +34,36 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
-		<!--<antcall target="unzip-package" inheritrefs="true" />-->
-		<antcall target="copy-module-files" inheritrefs="true" />
+    	<mkdir dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" />
+    	
+    	<download-unzip url="${module.tomcat_7_liferay_6_2_bundle.download.url}" dest="${module.tomcat_7_liferay_6_2_bundle.build.dir}" tmp="${module.tomcat_7_liferay_6_2_bundle.download.dir}" />
+    	
+		<antcall target="copy-project-files" inheritrefs="true" />
     </target>
 	
 	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: unzip-package                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="unzip-package">
-    	<unzip dest="${module.tomcat_7_liferay_6_2_bundle.build.dir}">
-    		<fileset dir="${module.tomcat_7_liferay_6_2_bundle.download.dir}" includes="*.zip" />
-    	</unzip>
+	<!-- ================================= 
+          target: module-deploy              
+         ================================= -->
+    <target name="module-deploy" depends="module-init" description="Deploy module">
+    	<copy todir="${module.tomcat_7_liferay_6_2_bundle.deploy.dir}">
+    		<fileset dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" />
+    	</copy>
+    </target>	
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="Display module properties">
+    	<echoproperties prefix="module.tomcat_7_liferay_6_2_bundle"></echoproperties>
     </target>
 	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: copy-module-files                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="copy-module-files">
+    <target name="copy-project-files">
     	<echo>Copying binary files...</echo>
 		<copy todir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" overwrite="true" includeemptydirs="false">
 			<fileset dir="${module.tomcat_7_liferay_6_2_bundle.diff.dir}" excludes="${module.tomcat_7_liferay_6_2_bundle.config.files}" />
@@ -86,13 +79,5 @@
 		</copy>            
     </target>
 	
-	
-	<!-- ================================= 
-          target: module-show-properties              
-         ================================= -->
-    <target name="module-show-properties" depends="module-init" description="description">
-    	<echoproperties prefix="module.tomcat_7_liferay_6_2_bundle"></echoproperties>
-    </target>
-
 	
 </project>

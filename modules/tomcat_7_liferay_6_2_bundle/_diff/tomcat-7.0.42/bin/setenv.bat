@@ -33,4 +33,4 @@ rem                   only be used by Tomcat itself, not by the stop process,
 rem                   the version command etc.
 rem                   Examples are heap size, GC logging, JMX ports etc.
 
-SET CATALINA_OPTS="%CATALINA_OPTS% @system.catalina.opts@ -Dfile.encoding=@system.file.encoding@ -Duser.timezone=@system.timezone@ -Xms@system.java.mem.minsize@ -Xmx@system.java.mem.maxsize@ -XX:MaxPermSize=@system.java.mem.permsize@ @module.tomcat_7_liferay_6_2_bundle.catalina.additional_props@"
+SET CATALINA_OPTS="%CATALINA_OPTS% @system.catalina.opts@ -Dfile.encoding=@system.file.encoding@ -Duser.timezone=@system.timezone@ @module.tomcat_7_liferay_6_2_bundle.catalina.additional_props@"

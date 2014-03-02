@@ -24,7 +24,7 @@
 	<!-- ================================= 
           target: module-clean              
          ================================= -->
-    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    <target name="module-clean" depends="module-init" description="Clean module">
     	<echo>Cleaning build dir...</echo>
     	<delete dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" includeemptydirs="true" />
     </target>
@@ -78,6 +78,5 @@
 			<filterset refid="filter.all" />
 		</copy>            
     </target>
-	
 	
 </project>

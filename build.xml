@@ -3,15 +3,21 @@
 
 <project name="automator" basedir="." default="help">
     <description>
-    	Automator Version 0.1
+    	Automator Version 0.2
     </description>
 	
 	<property name="automator.dir" value="." />
 
+	<import file="${automator.dir}/includes/build-common.xml" />
+
+	<fileset id="list.macros" dir="macros"  />
+	<property name="macrolist" refid="list.macros"/>
+	<for param="macro" list="${macrolist}">
+		<sequential>
+			<import file="${automator.dir}/macros/@{macro}" />
+		</sequential> 
+	</for>
 	
-	<import file="includes/build-common.xml" />
-	<import file="includes/build-modules.xml" />
-	<import file="includes/build-system.xml" />
-	<import file="includes/build-tests.xml" />
+	<import file="${automator.dir}/includes/build-modules.xml" />
 	
 </project>

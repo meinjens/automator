@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="macro-download-and-install">
+
+	<macrodef name="download-unzip">
+		<attribute name="url" />
+		<attribute name="tmp" default="tmp" />
+		<attribute name="dest" />
+		<attribute name="include" default="**/*" />
+		<attribute name="exclude" default="" />
+		<sequential>
+			<mkdir dir="@{tmp}" />
+			
+			<get dest="@{tmp}" src="@{url}" skipexisting="true" />
+			
+			<basename property="dest.filename" file="@{url}" />
+	    	<unzip dest="@{dest}" src="@{tmp}/${dest.filename}">
+	    		<cutdirsmapper dirs="1"/>
+	    		<patternset>
+	    			<include name="@{include}"/>
+	    			<exclude name="@{exclude}"/>
+	    		</patternset>
+	    	</unzip>
+			
+	   </sequential>
+	</macrodef>	
+
+</project>

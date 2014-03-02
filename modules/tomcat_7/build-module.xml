@@ -18,15 +18,13 @@
     	<property name="module.tomcat_7.build.dir" value="${module.tomcat_7.dir}/${automator.module.build.dir}" />
     	<property name="module.tomcat_7.download.dir" value="${module.tomcat_7.dir}/${automator.module.download.dir}" />
     	<property name="module.tomcat_7.diff.dir" value="${module.tomcat_7.dir}/${automator.module.diff.dir}" />
-    	
-    	<mkdir dir="${module.tomcat_7.build.dir}" />
     </target>
 
 	
 	<!-- ================================= 
           target: module-clean              
          ================================= -->
-    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    <target name="module-clean" depends="module-init" description="Clean module">
     	<delete dir="${module.tomcat_7.build.dir}" includeemptydirs="true" />
     </target>
 	
@@ -35,6 +33,8 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<mkdir dir="${module.tomcat_7.build.dir}" />
+    	
     	<antcall target="download-prerequisites" inheritrefs="true" />
     	<antcall target="unzip-package" inheritrefs="true" />
     	<antcall target="copy-additional-files" inheritrefs="true" />

@@ -22,7 +22,7 @@
 	<!-- ================================= 
           target: module-clean              
          ================================= -->
-    <target name="module-clean" depends="module-init" description="Clean temporary files for the module">
+    <target name="module-clean" depends="module-init" description="Clean module">
     	<echo>Insert clean steps for module here</echo>
     </target>
 	
@@ -40,7 +40,7 @@
 	<!-- ================================= 
           target: module-deploy              
          ================================= -->
-    <target name="module-deploy" depends="module-init" description="Build module">
+    <target name="module-deploy" depends="module-init" description="Deploy module">
     	<echo>Insert deploy steps for module here</echo>
     </target>	
 	
@@ -48,7 +48,7 @@
 	<!-- ================================= 
           target: module-show-properties              
          ================================= -->
-    <target name="module-show-properties" depends="module-init" description="Print properties of the module">
+    <target name="module-show-properties" depends="module-init" description="Display module properties">
     	<echoproperties prefix="module.sample"></echoproperties>
     </target>
 

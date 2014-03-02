@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="automator.module.self_signed_cert">
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: static properties                      
+         - - - - - - - - - - - - - - - - - -->
+	<property name="module.self_signed_cert.dir" value="${automator.dir}/modules/self_signed_cert" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: module-init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="module-init">
+    	<property file="${module.self_signed_cert.dir}/module.properties" />
+
+    	<property name="module.self_signed_cert.build.dir" value="${module.self_signed_cert.dir}/${automator.module.build.dir}" />
+    </target>
+
+	
+	<!-- ================================= 
+          target: module-clean              
+         ================================= -->
+    <target name="module-clean" depends="module-init" description="Clean module">
+    	<delete file="${module.self_signed_cert.build.dir}/${module.self_signed_cert.key.store}" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-build              
+         ================================= -->
+    <target name="module-build" depends="module-init" description="Build module">
+    	<mkdir dir="${module.self_signed_cert.build.dir}" />
+    	
+		<genkey alias="${module.self_signed_cert.key.alias}" verbose="true" validity="365" 
+			storetype="${module.self_signed_cert.key.storetype}" 
+			storepass="${module.self_signed_cert.key.storepass}" 
+			keystore="${module.self_signed_cert.build.dir}/${module.self_signed_cert.key.store}">
+				<dname>
+					<param name="CN" value="${company.common_name}" />
+					<param name="OU" value="${company.organizational_unit}" />
+					<param name="O" value="${company.organisation}" />
+					<param name="C" value="${company.country}" />
+				</dname>
+		</genkey>
+    </target>
+
+
+	<!-- ================================= 
+          target: module-deploy              
+         ================================= -->
+    <target name="module-deploy" depends="module-init" description="Deploy module">
+		<copy todir="${module.self_signed_cert.deploy.dir}">
+			<fileset file="${module.self_signed_cert.build.dir}/${module.self_signed_cert.key.store}" />
+		</copy>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="description">
+    	<echoproperties prefix="module.self_signed_cert"></echoproperties>
+    </target>
+
+	
+</project>

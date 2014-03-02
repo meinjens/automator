@@ -12,9 +12,9 @@
 	
 	
 	<!-- ================================= 
-          target: call clean target in modules              
+          target: clean target of modules              
          ================================= -->
-    <target name="clean" description="Clean all modules">
+    <target name="clean" description="Clean target of modules">
 		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-clean" />
 		</antcall>
@@ -22,9 +22,9 @@
 
 	
 	<!-- ================================= 
-          target: call build target in modules
+          target: build target of modules
          ================================= -->
-    <target name="build" description="Build all modules">
+    <target name="build" description="Build target of modules">
 		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-build" />
 		</antcall>
@@ -32,9 +32,19 @@
 	
 	
 	<!-- ================================= 
-          target: show properties for modules
+          target: deploy target of modules
          ================================= -->
-    <target name="show-module-properties" description="Display properties of all modules">
+    <target name="deploy" description="Deploy target of modules">
+		<antcall target="loop-modules" inheritrefs="true">
+			<param name="loop.modules.cmd" value="module-deploy" />
+		</antcall>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: show properties of modules
+         ================================= -->
+    <target name="show-module-properties" description="Display properties of modules">
 		<antcall target="loop-modules" inheritrefs="true">
 			<param name="loop.modules.cmd" value="module-show-properties" />
 		</antcall>

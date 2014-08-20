@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="macro-copy-filtered-files">
+
+	<macrodef name="copy-filtered-files">
+		<attribute name="to" />
+		<attribute name="diff" />
+		<attribute name="filtersfile" />
+		<attribute name="config.files" default ="${build.default.config.files}" />
+		
+		<sequential>
+	    	<echo>Copying binary files...</echo>
+			<copy todir="@{to}" overwrite="true" includeemptydirs="false">
+				<fileset dir="@{diff}" excludes="@{config.files}" />
+			</copy>
+	    	
+	    	<echo>Copying configuration files...</echo>
+			<copy todir="@{to}" includeemptydirs="true" overwrite="true">
+				<filterset refid="filter.all" />
+				<fileset dir="@{diff}" includes="@{config.files}" />
+				<filterset>
+					<filtersfile file="@{filtersfile}" />
+				</filterset>
+			</copy>
+		</sequential>
+	</macrodef>
+
+
+</project>

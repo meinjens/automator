@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="automator.module.system_files">
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: static properties                      
+         - - - - - - - - - - - - - - - - - -->
+	<property name="module.system_files.dir" value="${automator.dir}/modules/system_files" />
+	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: module-init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="module-init">
+    	<property file="${module.system_files.dir}/module.properties" />
+
+    	<property name="module.system_files.build.dir" value="${module.system_files.dir}/${automator.module.build.dir}" />
+    	<property name="module.system_files.diff.dir" value="${module.system_files.dir}/${automator.module.diff.dir}" />
+    </target>
+
+	
+	<!-- ================================= 
+          target: module-clean              
+         ================================= -->
+    <target name="module-clean" depends="module-init" description="Clean module">
+    	<echo>Cleaning build dir...</echo>
+		<delete dir="${module.system_files.build.dir}" includeemptydirs="true" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-build              
+         ================================= -->
+    <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Building system files...</echo>
+    	<mkdir dir="${module.system_files.build.dir}" />
+  	
+    	<copy-filtered-files 
+    		to="${module.system_files.build.dir}" 
+    		diff="${module.system_files.diff.dir}"
+    		filtersfile="${automator.dir}/${module.system_files.dir}/module.properties" />
+    </target>
+	
+	
+	<!-- ================================= 
+          target: module-deploy              
+         ================================= -->
+    <target name="module-deploy" depends="module-init" description="Deploy module">
+    	<echo>Deploying system files...</echo>
+    	<if>
+    		<istrue value="${module.system_files.deploy.clean-before-deploy}" />
+    		<then>
+    			<echo> (clean deployment)</echo>
+    			<delete dir="${module.system_files.deploy.dir}" includeemptydirs="true" />
+    		</then>
+    	</if>
+    	
+    	<copy todir="${module.system_files.deploy.dir}" overwrite="true">
+    		<fileset dir="${module.system_files.build.dir}" />
+    	</copy>
+    </target>	
+	
+	
+	<!-- ================================= 
+          target: module-show-properties              
+         ================================= -->
+    <target name="module-show-properties" depends="module-init" description="Display module properties">
+    	<echoproperties prefix="module.system_files"></echoproperties>
+    </target>
+
+	
+</project>

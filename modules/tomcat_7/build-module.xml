@@ -33,11 +33,18 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Building Liferay installation...</echo>
     	<mkdir dir="${module.tomcat_7.build.dir}" />
     	
-    	<antcall target="download-prerequisites" inheritrefs="true" />
-    	<antcall target="unzip-package" inheritrefs="true" />
-    	<antcall target="copy-additional-files" inheritrefs="true" />
+    	<download-unzip 
+    		url="${module.tomcat_7.download.url}" 
+    		dest="${module.tomcat_7.build.dir}" 
+    		tmp="${module.tomcat_7.download.dir}" />
+    	
+    	<copy-filtered-files 
+    		to="${module.tomcat_7.build.dir}" 
+    		diff="${module.tomcat_7.diff.dir}"
+    		filtersfile="${automator.dir}/${module.tomcat_7.dir}/module.properties" />	
     </target>
 	
 	
@@ -48,49 +55,5 @@
     	<echoproperties prefix="module.tomcat_7"></echoproperties>
     </target>
 	
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: download-prerequisites                     
-         - - - - - - - - - - - - - - - - - -->
-    <target name="download-prerequisites" depends="module-init" description="Download prerequisites from the internet">
-    	<delete dir="${module.tomcat_7.download.dir}" includeemptydirs="true" />
-    	<mkdir dir="${module.tomcat_7.download.dir}" />
-    	
-    	<get dest="${module.tomcat_7.download.dir}" src="${module.tomcat_7.download.url}" />
-    </target>
 
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: unzip-package                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="unzip-package">
-    	<unzip dest="${module.tomcat_7.build.dir}">
-    		<fileset dir="${module.tomcat_7.download.dir}" includes="*.zip" />
-    		<cutdirsmapper dirs="1"/>
-    		<patternset>
-    		    <exclude name="**/webapps/"/>
-		    </patternset>  		
-    	</unzip>
-    </target>
-	
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: copy-module-files                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="copy-additional-files">
-    	<echo>Copying binary files...</echo>
-		<copy todir="${module.tomcat_7.build.dir}" overwrite="true" includeemptydirs="false">
-			<fileset dir="${module.tomcat_7.diff.dir}" excludes="${module.tomcat_7.config.files}" />
-		</copy>
-    	
-    	<echo>Copying configuration files...</echo>
-		<copy todir="${module.tomcat_7.build.dir}" includeemptydirs="true" overwrite="true">
-			<fileset dir="${module.tomcat_7.diff.dir}" includes="${module.tomcat_7.config.files}" />
-			<filterset>
-				<filtersfile file="${automator.dir}/${module.tomcat_7.dir}/module.properties" />
-			</filterset>
-			<filterset refid="filter.all" />
-		</copy>            
-    </target>
-	
 </project>

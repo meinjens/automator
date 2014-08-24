@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+	ServerAdmin @module.apache_config.admin.email@
+	ServerName @module.apache_config.server.name@
+
+	DocumentRoot @module.apache_config.server.docroot@
+
+	JKMount /* ajp13_worker
+
+	ErrorLog @module.apache_config.server.log.error@
+	LogLevel warn
+	CustomLog @module.apache_config.server.log.access@ combined
+</VirtualHost>

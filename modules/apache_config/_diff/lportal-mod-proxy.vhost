@@ -1,0 +1,26 @@
+<VirtualHost *:80>
+    ServerAdmin @module.apache_config.server.admin@
+    ServerName @module.apache_config.server.name@:80
+    
+    ProxyRequests Off
+    <Proxy *>
+        Order deny,allow
+        Allow from all
+    </Proxy>
+
+	DocumentRoot "@module.apache_config.document.root@"
+	
+	ErrorDocument 500 /maintenance/index.html 
+    ErrorDocument 503 /maintenance/index.html
+	
+    ProxyPass /maintenance !
+    ProxyPassReverse /maintenance !
+    
+    ProxyPass / ajp://@web.server.host@:8009/
+    ProxyPassReverse / ajp://@web.server.host@:8009/
+
+    ErrorLog @module.apache_config.error.logfile@
+    LogLevel warn
+    CustomLog @module.apache_config.custom.logfile@ combined
+    ServerSignature On
+</VirtualHost>

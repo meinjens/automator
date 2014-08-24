@@ -1,0 +1,32 @@
+<VirtualHost *:443>
+    ServerAdmin @module.apache_config.server.admin@
+    ServerName @module.apache_config.server.name@:443
+    
+    SSLEngine on
+
+	SSLCipherSuite SSLv3:TLSv1:+HIGH:!SSLv2:!MD5:!MEDIUM:!LOW:!EXP:!ADH:!eNULL:!aNULL
+	SSLCertificateFile @module.apache_config.deploy.dir@/conf/cert/@certificate.crtfile@
+	SSLCertificateKeyFile @module.apache_config.deploy.dir@/conf/cert/@certificate.keyfile@
+    
+    DocumentRoot "@module.apache_config.document.root@"
+    
+    ProxyRequests Off
+    <Proxy *>
+        Order deny,allow
+        Allow from all
+    </Proxy>
+
+	ErrorDocument 500 /maintenance/index.html 
+    ErrorDocument 503 /maintenance/index.html
+	
+    ProxyPass /maintenance !
+    ProxyPassReverse /maintenance !
+    
+    ProxyPass / ajp://@web.server.host@:8009/
+    ProxyPassReverse / ajp://@web.server.host@:8009/
+
+    ErrorLog @module.apache_config.error.logfile.ssl@
+    LogLevel warn
+    CustomLog @module.apache_config.custom.logfile.ssl@ combined
+    ServerSignature On
+</VirtualHost>

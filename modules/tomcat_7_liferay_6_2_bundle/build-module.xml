@@ -34,11 +34,23 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Building Liferay installation...</echo>
     	<mkdir dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" />
     	
     	<download-unzip url="${module.tomcat_7_liferay_6_2_bundle.download.url}" dest="${module.tomcat_7_liferay_6_2_bundle.build.dir}" tmp="${module.tomcat_7_liferay_6_2_bundle.download.dir}" />
     	
-		<antcall target="copy-project-files" inheritrefs="true" />
+    	<delete includeemptydirs="true">
+    		<fileset dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}">
+    			<include name="**/welcome-theme/**"/>
+	    		<include name="**/calendar-portlet/**" />
+    			<include name="**/opensocial-portlet/**" />
+    		</fileset>
+    	</delete>
+    	
+    	<copy-filtered-files 
+    		to="${module.tomcat_7_liferay_6_2_bundle.build.dir}" 
+    		diff="${module.tomcat_7_liferay_6_2_bundle.diff.dir}"
+    		filtersfile="${automator.dir}/${module.tomcat_7_liferay_6_2_bundle.dir}/module.properties" />	
     </target>
 	
 	
@@ -46,9 +58,19 @@
           target: module-deploy              
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
-    	<copy todir="${module.tomcat_7_liferay_6_2_bundle.deploy.dir}">
+    	<echo>Deploying Liferay installation...</echo>
+    	<if>
+    		<istrue value="${module.tomcat_7_liferay_6_2_bundle.deploy.clean-before-deploy}" />
+    		<then>
+    			<echo> (clean deployment)</echo>
+    			<delete dir="${module.tomcat_7_liferay_6_2_bundle.deploy.dir}" includeemptydirs="true" includes="**/*" />
+    		</then>
+    	</if>
+    	
+    	<copy todir="${module.tomcat_7_liferay_6_2_bundle.deploy.dir}" overwrite="true">
     		<fileset dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" />
     	</copy>
+    	<chmod perm="+x" dir="${module.tomcat_7_liferay_6_2_bundle.deploy.dir}" includes="**/*.sh"/>
     </target>	
 	
 	
@@ -57,26 +79,6 @@
          ================================= -->
     <target name="module-show-properties" depends="module-init" description="Display module properties">
     	<echoproperties prefix="module.tomcat_7_liferay_6_2_bundle"></echoproperties>
-    </target>
-	
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: copy-module-files                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="copy-project-files">
-    	<echo>Copying binary files...</echo>
-		<copy todir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" overwrite="true" includeemptydirs="false">
-			<fileset dir="${module.tomcat_7_liferay_6_2_bundle.diff.dir}" excludes="${module.tomcat_7_liferay_6_2_bundle.config.files}" />
-		</copy>
-    	
-    	<echo>Copying configuration files...</echo>
-		<copy todir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" includeemptydirs="true" overwrite="true">
-			<fileset dir="${module.tomcat_7_liferay_6_2_bundle.diff.dir}" includes="${module.tomcat_7_liferay_6_2_bundle.config.files}" />
-			<filterset>
-				<filtersfile file="${automator.dir}/${module.tomcat_7_liferay_6_2_bundle.dir}/module.properties" />
-			</filterset>
-			<filterset refid="filter.all" />
-		</copy>            
     </target>
 	
 </project>

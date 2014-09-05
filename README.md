@@ -73,9 +73,16 @@ All macros placed in the macro folder will be loaded automatically.
 
 You can extend the build steps by adding a new one in the includes/build-modules.xml and adding the same build step in all available modules.
 
-<h2>Upgrading from old versions</h2>
+<h2>Upgrading from older versions</h2>
 
 1. Backup your customizations or better: get involved and make a pull request
 2. Replace the folders following folder with the latest ones: includes, lib, macros
 3. Replace the build.xml with the latest version
 4. Migrate the build steps of your modules if necessary
+
+
+<h2>Change Log</h2>
+
+<h3>Version 0.4</h3>
+
+- All configuration for an environment are placed in one file. Migration: Just copy the contents from env.properties and system.properties into one configuration files config/env.properties. And do so with your customized configuration files. 

@@ -42,7 +42,7 @@
           target: module-deploy              
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
-    	<propertycopy from="module.tomcat_natives.${system.arch}.dir" name="module.tomcat_natives.lib" />
+    	<propertycopy from="module.tomcat_natives.${system.win.arch}.dir" name="module.tomcat_natives.lib" />
     	
     	<echo>Copying TomCat natives lib...</echo>
     	<copy todir="${system.java.home}/bin" overwrite="true" includeemptydirs="false">

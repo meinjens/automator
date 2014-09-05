@@ -9,3 +9,5 @@ Features:
 * Add additional library path lib/ext
 * Configuration of HTTP, HTTPS, AJP Connector
 * Custom environment settings for TomCat startup
+
+See module.properties to setup the module

@@ -12,3 +12,5 @@ Build
 Deploy
 
 * Copy files to target
+
+See module.properties to setup the module

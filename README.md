@@ -12,7 +12,7 @@ ANT script toolbox to automate the build of application systems
 
 <h3>Setup environment for your system</h3>
 
-Create your system specific configuration file in the folder config and name it env.{name of your host}.properties or env.{username}.properties. Copy all properties from the default properties in env.properties file you want to customize.
+Create your system specific configuration file in the folder config and name it env.{name of your host}.properties or env.{username}.properties. Copy properties from the default properties in env.properties file you want to customize.
 
 <h3>Choosing modules for your system</h3>
 

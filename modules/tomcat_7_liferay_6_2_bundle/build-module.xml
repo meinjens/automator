@@ -26,7 +26,16 @@
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
     	<echo>Cleaning build dir...</echo>
+
     	<delete dir="${module.tomcat_7_liferay_6_2_bundle.build.dir}" includeemptydirs="true" />
+    	
+    	<if>
+    		<istrue value="${module.tomcat_7_liferay_6_2_bundle.download.clean}" />
+    		<then>
+    			<echo>Removing downloads...</echo>
+    			<delete dir="${module.tomcat_7_liferay_6_2_bundle.download.dir}" includeemptydirs="true" includes="**/*" />
+    		</then>
+    	</if>
     </target>
 	
 	

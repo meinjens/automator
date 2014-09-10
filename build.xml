@@ -6,18 +6,26 @@
     	automator Version 0.4
     </description>
 	
+	<!-- - - - - - - - - - - - - - - - - - 
+          Static properties
+         - - - - - - - - - - - - - - - - - -->
 	<property name="automator.dir" value="." />
-
-	<import file="${automator.dir}/includes/build-common.xml" />
+	<property name="automator.dir.libs" value="${automator.dir}/lib" />
+	<property name="automator.dir.modules" value="${automator.dir}/modules" />
+	<property name="automator.dir.config" value="${automator.dir}/config" />
+	<property name="automator.dir.includes" value="${automator.dir}/includes" />
+	<property name="automator.dir.macros" value="${automator.dir}/macros" />
+	
+	<import file="${automator.dir.includes}/build-common.xml" />
 
 	<fileset id="list.macros" dir="macros" />
 	<property name="macrolist" refid="list.macros"/>
 	<for param="macro" list="${macrolist}" delimiter="${path.separator}">
 		<sequential>
-			<import file="${automator.dir}/macros/@{macro}" />
+			<import file="${automator.dir.macros}/@{macro}" />
 		</sequential> 
 	</for>
 	
-	<import file="${automator.dir}/includes/build-modules.xml" />
+	<import file="${automator.dir.includes}/build-modules.xml" />
 	
 </project>

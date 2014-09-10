@@ -6,14 +6,6 @@
 	<property environment="env" />
 
 	<!-- - - - - - - - - - - - - - - - - - 
-          Static properties
-         - - - - - - - - - - - - - - - - - -->
-	<property name="automator.dir.libs" value="lib" />
-	<property name="automator.dir.modules" value="modules" />
-	<property name="automator.dir.config" value="config" />
-	
-	
-	<!-- - - - - - - - - - - - - - - - - - 
           Read Hostname
          - - - - - - - - - - - - - - - - - -->
 	<exec executable="uname" os="Linux" failifexecutionfails="false" outputproperty="env.HOSTNAME">

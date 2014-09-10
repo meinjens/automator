@@ -1,5 +1,5 @@
-Automator Module for self signed cert 
-=====================================
+Automator module for creating self signed certificate
+=====================================================
 
 Build
 
@@ -7,4 +7,6 @@ Build
 
 Deploy
 
-* Copy to target
+* Copy to target directory
+
+See module.properties to setup the module

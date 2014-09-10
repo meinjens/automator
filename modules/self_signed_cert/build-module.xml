@@ -23,6 +23,8 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
+    	<echo>Cleaning build dir...</echo>
+    	
     	<delete file="${module.self_signed_cert.build.dir}/${module.self_signed_cert.key.store}" />
     </target>
 	
@@ -31,6 +33,8 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Building self signed certificate...</echo>
+    	
     	<mkdir dir="${module.self_signed_cert.build.dir}" />
     	
 		<genkey alias="${module.self_signed_cert.key.alias}" verbose="true" validity="365" 
@@ -51,6 +55,8 @@
           target: module-deploy              
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
+    	<echo>Deploying certificate...</echo>
+    	
 		<copy todir="${module.self_signed_cert.deploy.dir}">
 			<fileset file="${module.self_signed_cert.build.dir}/${module.self_signed_cert.key.store}" />
 		</copy>

@@ -16,6 +16,7 @@
     	<property file="${module.sample.dir}/module.properties" />
 
     	<property name="module.sample.build.dir" value="${module.sample.dir}/${automator.module.build.dir}" />
+    	<property name="module.sample.diff.dir" value="${module.sample.dir}/${automator.module.diff.dir}" />
     </target>
 
 	
@@ -23,6 +24,8 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
+    	<echo>Cleaning build dir...</echo>
+    	
     	<echo>Insert clean steps for module here</echo>
     </target>
 	
@@ -31,6 +34,8 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
+    	<echo>Building module...</echo>
+
     	<mkdir dir="${module.sample.build.dir}" />
     	
     	<echo>Insert build steps for module here</echo>
@@ -41,6 +46,8 @@
           target: module-deploy              
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
+    	<echo>Deploying files...</echo>
+    	
     	<echo>Insert deploy steps for module here</echo>
     </target>	
 	

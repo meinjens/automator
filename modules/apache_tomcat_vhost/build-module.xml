@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 
-<project name="automator.module.apache_config">
+<project name="automator.module.apache_tomcat_vhost">
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: static properties                      
          - - - - - - - - - - - - - - - - - -->
-	<property name="module.apache_config.dir" value="${automator.dir}/modules/apache_config" />
+	<property name="module.apache_tomcat_vhost.dir" value="${automator.dir}/modules/apache_tomcat_vhost" />
 	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: module-init                      
          - - - - - - - - - - - - - - - - - -->
     <target name="module-init">
-    	<property file="${module.apache_config.dir}/module.properties" />
+    	<property file="${module.apache_tomcat_vhost.dir}/module.properties" />
 
-    	<property name="module.apache_config.build.dir" value="${module.apache_config.dir}/${automator.module.build.dir}" />
-    	<property name="module.apache_config.diff.dir" value="${module.apache_config.dir}/${automator.module.diff.dir}" />
+    	<property name="module.apache_tomcat_vhost.build.dir" value="${module.apache_tomcat_vhost.dir}/${automator.module.build.dir}" />
+    	<property name="module.apache_tomcat_vhost.diff.dir" value="${module.apache_tomcat_vhost.dir}/${automator.module.diff.dir}" />
     </target>
 
 	
@@ -25,7 +25,8 @@
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
     	<echo>Cleaning build dir...</echo>
-		<delete dir="${module.apache_config.build.dir}" includeemptydirs="true" />
+    	
+		<delete dir="${module.apache_tomcat_vhost.build.dir}" includeemptydirs="true" />
     </target>
 	
 	
@@ -34,14 +35,15 @@
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
     	<echo>Building apache configuration...</echo>
-    	<mkdir dir="${module.apache_config.build.dir}" />
+    	
+    	<mkdir dir="${module.apache_tomcat_vhost.build.dir}" />
     	
     	<antcall target="generate-self-signed-certificate" inheritrefs="true" />
     	
     	<copy-filtered-files 
-    		to="${module.apache_config.build.dir}" 
-    		diff="${module.apache_config.diff.dir}"
-    		filtersfile="${automator.dir}/${module.apache_config.dir}/module.properties" />
+    		to="${module.apache_tomcat_vhost.build.dir}" 
+    		diff="${module.apache_tomcat_vhost.diff.dir}"
+    		filtersfile="${automator.dir}/${module.apache_tomcat_vhost.dir}/module.properties" />
     </target>
 	
 	
@@ -50,8 +52,9 @@
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
     	<echo>Deploying Apache configuration files...</echo>
-    	<copy todir="${module.apache_config.deploy.dir}" overwrite="true">
-    		<fileset dir="${module.apache_config.build.dir}" />
+    	
+    	<copy todir="${module.apache_tomcat_vhost.deploy.dir}" overwrite="true">
+    		<fileset dir="${module.apache_tomcat_vhost.build.dir}" />
     	</copy>
     </target>	
 	
@@ -60,7 +63,7 @@
           target: module-show-properties              
          ================================= -->
     <target name="module-show-properties" depends="module-init" description="Display module properties">
-    	<echoproperties prefix="module.apache_config"></echoproperties>
+    	<echoproperties prefix="module.apache_tomcat_vhost"></echoproperties>
     </target>
 
 	
@@ -68,11 +71,11 @@
           target: generate-certificate                      
          - - - - - - - - - - - - - - - - - -->
     <target name="generate-self-signed-certificate">
-    	<echo>Generating self signed certificate...</echo>
-    	<mkdir dir="${module.apache_config.build.dir}/conf/cert"/>
+    	<echo>Generating self signed certificate for Apache...</echo>
+    	<mkdir dir="${module.apache_tomcat_vhost.build.dir}/conf/cert"/>
     	
-    	<exec executable="cmd" osfamily="windows" resultproperty="result" dir="${module.apache_config.build.dir}/conf/cert">
-    		<arg line='/c ${module.apache_config.openssl.bin} req -x509 -nodes -days 365 -newkey rsa:2048 -config ${module.apache_config.openssl.config} -subj "/C=${certificate.country_name}/ST=${certificate.state}/L=${certificate.locality}/O=${certificate.organization}/OU=${certificate.organizational_unit}/CN=${certificate.common_name}/emailAddress=${certificate.email}" -keyout ${certificate.keyfile} -out ${certificate.crtfile}'/>
+    	<exec executable="cmd" osfamily="windows" resultproperty="result" dir="${module.apache_tomcat_vhost.build.dir}/conf/cert">
+    		<arg line='/c ${module.apache_tomcat_vhost.openssl.bin} req -x509 -nodes -days 365 -newkey rsa:2048 -config ${module.apache_tomcat_vhost.openssl.config} -subj "/C=${certificate.country_name}/ST=${certificate.state}/L=${certificate.locality}/O=${certificate.organization}/OU=${certificate.organizational_unit}/CN=${certificate.common_name}/emailAddress=${certificate.email}" -keyout ${certificate.keyfile} -out ${certificate.crtfile}'/>
     	</exec>
     </target>
 

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 
-<project name="automator.module.tomcat_natives">
+<project name="automator.module.tomcat_natives_win">
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: static properties                      
          - - - - - - - - - - - - - - - - - -->
-	<property name="module.tomcat_natives.dir" value="${automator.dir}/modules/tomcat_natives" />
+	<property name="module.tomcat_natives_win.dir" value="${automator.dir}/modules/tomcat_natives_win" />
 	
 	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: module-init                      
          - - - - - - - - - - - - - - - - - -->
     <target name="module-init">
-    	<property file="${module.tomcat_natives.dir}/module.properties" />
+    	<property file="${module.tomcat_natives_win.dir}/module.properties" />
 
-    	<property name="module.tomcat_natives.build.dir" value="${module.tomcat_natives.dir}/${automator.module.build.dir}" />
-    	<property name="module.tomcat_natives.download.dir" value="${module.tomcat_natives.dir}/${automator.module.download.dir}" />
+    	<property name="module.tomcat_natives_win.build.dir" value="${module.tomcat_natives_win.dir}/${automator.module.build.dir}" />
+    	<property name="module.tomcat_natives_win.download.dir" value="${module.tomcat_natives_win.dir}/${automator.module.download.dir}" />
     </target>
 
 	
@@ -24,7 +24,17 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
-    	<delete dir="${module.tomcat_natives.build.dir}" includeemptydirs="true" />
+    	<echo>Cleaning build dir...</echo>
+    	
+    	<delete dir="${module.tomcat_natives_win.build.dir}" includeemptydirs="true" />
+    	
+    	<if>
+    		<istrue value="${module.tomcat_natives_win.download.clean}" />
+    		<then>
+    			<echo>Removing downloads...</echo>
+    			<delete dir="${module.tomcat_natives_win.download.dir}" includeemptydirs="true" includes="**/*" />
+    		</then>
+    	</if>    	
     </target>
 	
 	
@@ -32,9 +42,11 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
-    	<mkdir dir="${module.tomcat_natives.build.dir}" />
+    	<echo>Building TomCat natives...</echo>
     	
-    	<download-unzip url="${module.tomcat_natives.download.url}" dest="${module.tomcat_natives.build.dir}" tmp="${module.tomcat_natives.download.dir}" />
+    	<mkdir dir="${module.tomcat_natives_win.build.dir}" />
+    	
+    	<download-unzip url="${module.tomcat_natives_win.download.url}" dest="${module.tomcat_natives_win.build.dir}" tmp="${module.tomcat_natives_win.download.dir}" />
     </target>
 
 	
@@ -42,11 +54,13 @@
           target: module-deploy              
          ================================= -->
     <target name="module-deploy" depends="module-init" description="Deploy module">
-    	<propertycopy from="module.tomcat_natives.${system.win.arch}.dir" name="module.tomcat_natives.lib" />
+    	<echo>Deploying TomCat Natives...</echo>
+    	
+    	<propertycopy from="module.tomcat_natives_win.${system.win.arch}.dir" name="module.tomcat_natives_win.lib" />
     	
     	<echo>Copying TomCat natives lib...</echo>
     	<copy todir="${system.java.home}/bin" overwrite="true" includeemptydirs="false">
-    		<fileset file="${module.tomcat_natives.build.dir}/${module.tomcat_natives.lib}" />
+    		<fileset file="${module.tomcat_natives_win.build.dir}/${module.tomcat_natives_win.lib}" />
     	</copy>
     </target>	
 	
@@ -55,7 +69,7 @@
           target: module-show-properties              
          ================================= -->
     <target name="module-show-properties" depends="module-init" description="Display module properties">
-    	<echoproperties prefix="module.tomcat_natives"></echoproperties>
+    	<echoproperties prefix="module.tomcat_natives_win"></echoproperties>
     </target>
 	
 	

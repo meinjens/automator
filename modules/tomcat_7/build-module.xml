@@ -25,7 +25,17 @@
           target: module-clean              
          ================================= -->
     <target name="module-clean" depends="module-init" description="Clean module">
+    	<echo>Cleaning build dir...</echo>
+    	
     	<delete dir="${module.tomcat_7.build.dir}" includeemptydirs="true" />
+    	
+    	<if>
+    		<istrue value="${module.tomcat_7.download.clean}" />
+    		<then>
+    			<echo>Removing downloads...</echo>
+    			<delete dir="${module.tomcat_7.download.dir}" includeemptydirs="true" includes="**/*" />
+    		</then>
+    	</if>
     </target>
 	
 	
@@ -33,7 +43,8 @@
           target: module-build              
          ================================= -->
     <target name="module-build" depends="module-init" description="Build module">
-    	<echo>Building Liferay installation...</echo>
+    	<echo>Building TomCat installation...</echo>
+    	
     	<mkdir dir="${module.tomcat_7.build.dir}" />
     	
     	<download-unzip 
@@ -47,6 +58,24 @@
     		filtersfile="${automator.dir}/${module.tomcat_7.dir}/module.properties" />	
     </target>
 	
+	<!-- ================================= 
+          target: module-deploy              
+         ================================= -->
+    <target name="module-deploy" depends="module-init" description="Deploy module">
+    	<echo>Deploying TomCat installation...</echo>
+    	<if>
+    		<istrue value="${module.tomcat_7.deploy.clean-before-deploy}" />
+    		<then>
+    			<echo> (clean deployment)</echo>
+    			<delete dir="${module.tomcat_7.deploy.dir}" includeemptydirs="true" includes="**/*" />
+    		</then>
+    	</if>
+    	
+    	<copy todir="${module.tomcat_7.deploy.dir}" overwrite="true">
+    		<fileset dir="${module.tomcat_7.build.dir}" />
+    	</copy>
+    	<chmod perm="+x" dir="${module.tomcat_7.deploy.dir}" includes="**/*.sh"/>
+    </target>	
 	
 	<!-- ================================= 
           target: module-show-properties              

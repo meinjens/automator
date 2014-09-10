@@ -1,35 +1,38 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="build-test-automator" basedir="..">
+<project name="test-automator" basedir="..">
 	<description>
 		Tests for automator
 	</description>
 
 	<import file="../build.xml" />
 	
-	<target name="test-common">
+	<target name="test-self">
 		<echo>hostname =  ${hostname}</echo>
 		<echo>user.name = ${user.name}</echo>
+		<echo>system = ${system}</echo>
 		
 		<echo>automator.dir = ${automator.dir}</echo>
 		
 		<echo>automator.dir.libs = ${automator.dir.libs}</echo>
 		<echo>automator.dir.modules = ${automator.dir.modules}</echo>
-		<echo>automator.dir.env = ${automator.dir.environment}</echo>
-		<echo>automator.dir.project = ${automator.dir.project}</echo>
+		<echo>automator.dir.config = ${automator.dir.config}</echo>
+		<echo>automator.dir.includes = ${automator.dir.includes}</echo>
+		<echo>automator.dir.macros = ${automator.dir.macros}</echo>
 	</target>
 	
 
 	<target name="test-environment-properties">
 		<echo>system.base.dir = ${system.base.dir}</echo>
+		
+		<echo>system.name = ${system.name}</echo>
+		<echo>system.modules = ${system.modules}</echo>
 	</target>
 
 	
-	<target name="test-system-properties">
-		<echo>system.name = ${system.name}</echo>
-		
-		<echo>system.modules = ${system.modules}</echo>
+	<target name="test-properties">
+		<echoproperties />
 	</target>
 
 </project>

@@ -19,8 +19,8 @@
 	<import file="${automator.dir.includes}/build-common.xml" />
 
 	<fileset id="list.macros" dir="macros" />
-	<property name="macrolist" refid="list.macros"/>
-	<for param="macro" list="${macrolist}" delimiter="${path.separator}">
+	<property name="macrolist" refid="list.macros" />
+	<for param="macro" list="${macrolist}" delimiter=";">
 		<sequential>
 			<import file="${automator.dir.macros}/@{macro}" />
 		</sequential> 
